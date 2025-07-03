@@ -1,5 +1,6 @@
 #En este archivo se crean todos los endpoints del recurso (Ejemplo: Task)
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Request, Form
+from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 
 from app.repositories.database import get_db
@@ -25,8 +26,10 @@ def get_task(id : int, request: Request, db : Session = Depends(get_db)):
     return templates.TemplateResponse("home.html",{"request": request, "tasks": [service.get_task(db, id)]})
 
 @router.post('/task')
-def create_task(task : Task, db: Session = Depends(get_db)):
-    return service.create_task(db, task)
+def create_task(nombre: str = Form(...), completa: bool = Form(False), importante : bool = Form(False), db: Session = Depends(get_db)):
+    task = Task(nombre=nombre, completa=completa, importante=importante)
+    service.create_task(db, task)
+    return RedirectResponse(url='/task' , status_code=303) 
 
 @router.put('/task/{id}')
 def update_task(id : int, task : Task, db: Session = Depends(get_db)):
