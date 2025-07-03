@@ -1,27 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>to-do-list</title>
-    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
-</head>
-<body>
+    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}" />
+  </head>
+  <body>
     <section>
-        <table class="table-task">
-            <tr>
-                <th >Descripcion</th>
-                <th >Completa</th>
-                <th >Importante</th>
-            </tr>
-            {% for task in tasks %}
-            <tr class="task">
-                <td class="title-task">{{ task.nombre }}</td>
-                <td class="complete-task {{ 'true' if task.completa else 'false' }}">{{ task.completa}}</td>
-                <td class="important-task">{{ task.importante}}</td>
-            </tr>
-            {% endfor %}
-        </table>
+      <h2 class="form-title">Agregar nueva tarea</h2>
+      <form class="form-task" method="post" action="/task">
+        <input
+          type="text"
+          name="nombre"
+          placeholder="Descripción de la tarea"
+        />
+
+        <label class="checkbox-label">
+          <input type="checkbox" name="completa" />
+          Completada
+        </label>
+
+        <label class="checkbox-label">
+          <input type="checkbox" name="importante" />
+          Importante
+        </label>
+
+        <button type="submit">Agregar tarea</button>
+      </form>
+      <table class="table-task">
+        <tr>
+          <th>Descripcion</th>
+          <th>Completa</th>
+          <th>Importante</th>
+        </tr>
+        {% for task in tasks %}
+        <tr class="task">
+          <td class="title-task">{{ task.nombre }}</td>
+          <td class="complete-task {{ 'true' if task.completa else 'false' }}">
+            {{ task.completa}}
+          </td>
+          <td class="important-task">{{ task.importante}}</td>
+        </tr>
+        {% endfor %}
+      </table>
     </section>
-</body>
+  </body>
 </html>
