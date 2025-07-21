@@ -15,34 +15,55 @@
           name="nombre"
           placeholder="Descripción de la tarea"
         />
-
         <label class="checkbox-label">
-          <input type="checkbox" name="completa" />
+          <input type="checkbox" name="completa" value="true" />
           Completada
         </label>
-
         <label class="checkbox-label">
-          <input type="checkbox" name="importante" />
+          <input type="checkbox" name="importante" value="true" />
           Importante
         </label>
-
         <button type="submit">Agregar tarea</button>
       </form>
       <table class="table-task">
-        <tr>
-          <th>Descripcion</th>
-          <th>Completa</th>
-          <th>Importante</th>
-        </tr>
-        {% for task in tasks %}
-        <tr class="task">
-          <td class="title-task">{{ task.nombre }}</td>
-          <td class="complete-task {{ 'true' if task.completa else 'false' }}">
-            {{ task.completa}}
-          </td>
-          <td class="important-task">{{ task.importante}}</td>
-        </tr>
-        {% endfor %}
+        <thead>
+          <tr>
+            <th>Descripcion</th>
+            <th>Completa</th>
+            <th>Importante</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for task in tasks %}
+          <tr id="task-{{ task.id }}">
+            <td class="title-task">{{ task.nombre }}</td>
+            <td class="complete-task {{ 'true' if task.completa else 'false' }}">
+              {{ task.completa }}
+            </td>
+            <td class="important-task {{ 'true' if task.importante else 'false' }}">
+              {{ task.importante }}
+            </td>
+            <td>
+              <a href="/edit_task/{{ task.id }}" class="edit-btn">Editar</a>
+
+              <form
+                action="/task/{{ task.id }}/delete"
+                method="post"
+                style="display: inline"
+              >
+                <button
+                  type="submit"
+                  class="delete-btn"
+                  onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?');"
+                >
+                  Eliminar
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
       </table>
     </section>
   </body>
