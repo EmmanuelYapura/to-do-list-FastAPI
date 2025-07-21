@@ -121,7 +121,14 @@ section{
 
 .important-task {
   font-weight: bold;
+}
+
+.important-task.true {
   color: #eab308;
+}
+
+.important-task.false{
+  color: gray;
 }
 
 /* Mobile */
