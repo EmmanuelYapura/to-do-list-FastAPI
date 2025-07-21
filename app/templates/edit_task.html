@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Tarea</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
+</head>
+<body>
+    <section>
+        <h2 class="form-title">Editar Tarea</h2>
+        <form class="form-task" method="post" action="/task/{{ task.id }}/update">
+            <input
+                type="hidden"
+                name="task_id"
+                value="{{ task.id }}"
+            >
+            <input
+                type="text"
+                name="nombre"
+                placeholder="Descripción de la tarea"
+                value="{{ task.nombre }}"
+                required
+            >
+            <label class="checkbox-label">
+                <input type="checkbox" name="completa" value="true" {% if task.completa %}checked{% endif %}>
+                Completada
+            </label>
+            <label class="checkbox-label">
+                <input type="checkbox" name="importante" value="true" {% if task.importante %}checked{% endif %}>
+                Importante
+            </label>
+            <button type="submit">Guardar Cambios</button>
+            <a href="/task" class="button">Cancelar</a> </form>
+    </section>
+</body>
+</html>
