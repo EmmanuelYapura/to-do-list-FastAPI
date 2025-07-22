@@ -20,6 +20,31 @@ Una API REST básica desarrollada con **FastAPI** para gestionar una lista de ta
 
 ---
 
+## 🐳 Docker (¡rápido y sin instalaciones locales!)
+
+Si solo querés probar o ejecutar el proyecto sin instalar Python ni dependencias, usá Docker.
+
+### 1. Requisitos
+- Tener instalado [Docker Engine](https://docs.docker.com/engine/install/) (o Docker Desktop en Windows/Mac).
+
+### 2. Construir la imagen
+Desde la **raíz del repo** (donde está el `Dockerfile`):
+
+   ```bash
+      docker build -t todo-fastapi .
+   ```
+
+### 3. Levantar el servidor
+   ```bash
+      docker run -p 8000:8000 todo-fastapi
+   ```
+
+### 4. Abrir navegador en: 
+
+   - http://localhost:8000 – sitio web con Jinja2
+   - http://localhost:8000/docs – Swagger interactivo
+   - http://localhost:8000/redoc – ReDoc
+
 ## 🚀 Instalación
 
 1. Clona este repositorio:
