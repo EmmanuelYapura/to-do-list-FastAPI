@@ -45,6 +45,8 @@ Desde la **raíz del repo** (donde está el `Dockerfile`):
    - http://localhost:8000/docs – Swagger interactivo
    - http://localhost:8000/redoc – ReDoc
 
+---
+
 ## 🚀 Instalación
 
 1. Clona este repositorio:
