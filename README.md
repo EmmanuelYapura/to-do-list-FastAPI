@@ -41,7 +41,7 @@ Desde la **raíz del repo** (donde está el `Dockerfile`):
 
 ### 4. Abrir navegador en: 
 
-   - http://localhost:8000/task – sitio web con Jinja2 para ver tareas, agrega, modificar o eliminar
+   - http://localhost:8000/task – sitio web con Jinja2 para ver tareas, agregar, modificar o eliminar
    - http://localhost:8000/docs – Swagger interactivo
    - http://localhost:8000/redoc – ReDoc
 
