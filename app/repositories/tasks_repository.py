@@ -28,10 +28,8 @@ class TaskRepository:
         db_task = db.query(TaskModel).filter_by(id=id_task).first()
         if not db_task:
             raise HTTPException(status_code=404, detail="La tarea no se puede modificar")
-        if db_task:
-            db_task.nombre = task.nombre
-            db_task.completa = task.completa
-            db_task.importante = task.importante
+        for field, value in task.dict(exclude_unset=True).items():
+            setattr(db_task, field, value)
         db.commit()
         db.refresh(db_task)
         return db_task
