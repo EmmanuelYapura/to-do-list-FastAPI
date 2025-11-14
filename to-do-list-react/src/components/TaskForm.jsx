@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { createTask } from "../api/tasksApi"
 
 export function TaskForm({addTask}){
     const [nombre, setNombre] = useState("")
@@ -7,28 +8,14 @@ export function TaskForm({addTask}){
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
         const newTask = {nombre, completa, importante}
-        
-        try{
-            const response = await fetch("http://127.0.0.1:8000/api/tasks", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newTask),
-        });
-        
-        if(!response.ok){
-            throw new Error("Error al crear la tarea")       
-        }
-        const data = await response.json()
+        const data = await createTask(newTask)
         addTask(data)
-        /* limpia nuestro form */
+
         setNombre("")
         setCompleta(false)
         setImportante(false)
-    }catch (error){
-        console.error(error)
-    }
-
     }
 
     return(
