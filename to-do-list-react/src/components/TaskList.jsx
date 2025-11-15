@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { deleteTask, getTasks, updateTask } from "../api/tasksApi";
 import { TaskItem } from "./TaskItem";
 import { TaskForm } from "./TaskForm";
+import '../styles/tasks.css'
 
 export function TaskList() {
   const [tasks, setTasks] = useState([]);
@@ -42,8 +43,8 @@ export function TaskList() {
   return (
     <div className="tasks-container">
       <h1>To-Do List</h1>
+      <p className="subtitle">Una forma moderna de gestionar tus tareas</p>
       <TaskForm addTask={addTask} />
-      <h2>Lista de tareas</h2>
       {tasks.length === 0 ? (
         <p>No hay tareas aun.</p>
       ) : (
