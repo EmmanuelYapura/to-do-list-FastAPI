@@ -1,6 +1,6 @@
-# 📋 To‑Do List – FastAPI
+# 📋 To‑Do List – FastAPI + React + MySQL
 
-Una API REST básica desarrollada con **FastAPI** para gestionar una lista de tareas (*tasks*), con operaciones CRUD: crear, leer, actualizar y eliminar tareas.
+Aplicación Full Stack para la gestión de tareas, compuesta por un backend en **FastAPI** que expone una API REST completa y un frontend en **React**. La aplicación utiliza **MySQL** como base de datos para almacenar las tareas y permite realizar todas las operaciones CRUD: crear, leer, actualizar y eliminar. Diseñada con una arquitectura modular, separación de capas y uso de controladores, servicios y repositorios.
 
 ---
 
@@ -11,72 +11,121 @@ Una API REST básica desarrollada con **FastAPI** para gestionar una lista de ta
 - **SQLAlchemy** 
 - **Pydantic** 
 - **Uvicorn** 
-- **SQLite** 
-- **Jinja2**  
+- **MySQL**  
 
 ### 🎨 Frontend
-- **HTML5** 
-- **CSS3** 
-
----
-
-## 🐳 Docker (¡rápido y sin instalaciones locales!)
-
-Si solo querés probar o ejecutar el proyecto sin instalar Python ni dependencias, usá Docker.
-
-### 1. Requisitos
-- Tener instalado [Docker Engine](https://docs.docker.com/engine/install/) (o Docker Desktop en Windows/Mac).
-
-### 2. Construir la imagen
-Desde la **raíz del repo** (donde está el `Dockerfile`):
-
-   ```bash
-      docker build -t todo-fastapi .
-   ```
-
-### 3. Levantar el servidor
-   ```bash
-      docker run -p 8000:8000 todo-fastapi
-   ```
-
-### 4. Abrir navegador en: 
-
-   - http://localhost:8000/task – sitio web con Jinja2 para ver tareas, agregar, modificar o eliminar
-   - http://localhost:8000/docs – Swagger interactivo
-   - http://localhost:8000/redoc – ReDoc
+- **React** (HTML, CSS, JAVASCRIPT) 
+- **Fetch API**
+- **React Hooks**
 
 ---
 
 ## 🚀 Instalación
+### Cómo ejecutar el scraper + Ejemplos
 
-1. Clona este repositorio:
+1. **Clonar el repositorio:**
 
-   ```bash
-   git clone https://github.com/EmmanuelYapura/to-do-list-FastAPI.git "nombre_carpeta"
+   ```
+   git clone https://github.com/EmmanuelYapura/scraping-musimundo.git "nombre_carpeta"
    cd "nombre_carpeta"
    ```
 
-2. Crea un entorno virtual e instala dependencias:
+2. **Crear un entorno virtual:**
 
-   ```bash
+   ```
    python -m venv venv
-   source venv/bin/activate      # Linux/macOS
-   venv\Scripts\activate         # Windows
+   ```
 
+   - Para Windows
+
+   ```
+   venv/Scripts/activate
+   ```
+
+   - Para Linux/macOs
+
+   ```
+   source venv/bin/activate
+   ```
+
+3. **Instala las dependencias :**
+
+   ```
    pip install -r requirements.txt
    ```
 
-3. Levantar el servidor:
-
-   ```bash
-   - uvicorn app.main:app --reload
+4. Luego creamos un archivo .env para nuestras variables de entorno
+   ```
+      DATABASE_USER=root # o tu usuario
+      DATABASE_PASSWORD=123456 # ejemplo usando docker punto 5
+      DATABASE_NAME=todo_db # nombre a eleccion
    ```
 
-4. Ingresar al puerto:
+5. **Crear base de datos para la conexion**
 
-   ```bash
-   http://127.0.0.1:8000
+   Antes de ejecutar la aplicación, primero creamos la base de datos MySQL 
+   
+   Opción 1 : MySQL Workbench: herramienta de diseño y administración de bases de datos. Ejecutá los comandos SQL indicados uno por uno desde el botón de ejecución marcado. Recorda utilizar el mismo nombre de base en tu archivo .env
+
+   ![creacion_base](assets/create_base.png)
+
+   
+   Opción 2: 🐳 Docker (recomendado si no tenés MySQL instalado)
+   
+   en estas instrucciones vamos a crear la base usando un contenedor mysql en docker, con un usuario root a modo de prueba usando la imagen de mysql con la siguiente linea:
+
    ```
+   docker run --name mysql-db -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 mysql
+   ```
+
+   - Ingresar el password del cliente root para ingresar a la base de datos
+   - Dentro de la terminal del contenedor de docker:
+
+   ```
+   mysql -p
+   ```
+
+   - 🔒 Importante: en la consola de docker la contrasena es invisible! 
+
+   Podes continuar con los comandos de la imagen para la creacion de la base.
+   No te olvides de modificar las variables de entorno!
+
+6. Levantamos nuestra API 
+
+   ```
+   uvicorn app.main:app --reload
+   ```
+
+7. Levantamos nuestro frontend con React (En otra terminal)
+
+   ```
+   Primero ingresamos a la carpeta to-do-list-react
+      cd to-do-list-react
+   ```
+   ```
+   ejecutamos los comandos
+      npm install
+      npm run dev
+   ```
+
+8. Listo, ingresamos a la aplicacion y comenzamos a utilizar nuestro to-do-list
+
+   ```
+   http://localhost:5173/
+   ```
+
+9. Creación de una tarea (Ejemplo)
+
+   ![primer_tarea](assets/create_task.png)
+
+10. Actualización de una tarea
+
+      ![tarea_realizada](assets/update_task.png)
+
+11. Eliminación de una tarea
+
+      ![tarea_eliminada](assets/delete_task.png)
+      ![tarea_eliminada_2](assets/delete_task_2.png)
 
 ---
 
@@ -91,40 +140,11 @@ Accediendo a:
 
 ## 📡 Endpoints Basicos
 
-- `GET /task` – Lista todas las tareas  
-- `GET /task/{id}` – Obtiene una tarea por ID  
-- `GET /edit_task/{id}` – Permite editar una tarea por ID
-- `POST /task` – Crea una nueva tarea  
-- `POST /task/{id}/update` – Actualiza una tarea existente  
-- `POST /task/{id}/delete` – Elimina una tarea existente
-
----
-
-## 🧪 Ejemplos de uso
-
-### Crear una tarea
-
-```http
-POST /task
-Content-Type: application/json
-
-{
-  "nombre": "ejemplo de tarea",
-  "completa": false,
-  "importante": false
-}
-```
-
-### Respuesta
-
-```json
-{
-  "id": 1,
-  "nombre": "ejemplo de tarea",
-  "completa": false,
-  "importante": false
-}
-```
+- `GET /api/tasks` – Lista todas las tareas  
+- `GET /api/tasks/{id}` – Obtiene una tarea por ID  
+- `POST /api/tasks` – Crea una nueva tarea  
+- `PUT /api/tasks/{id}/` – Actualiza una tarea existente  
+- `DELETE /api/tasks/{id}/` – Elimina una tarea existente
 
 ---
 
@@ -132,19 +152,16 @@ Content-Type: application/json
 
 ```
 app/
-├── controllers/               # Controladores: definen los endpoints y lógica de enrutamiento
+├── controllers/               # Controladores: endpoints y rutas
 ├── repositories/              # Capa de acceso a datos
-│   ├── models/                # Modelos ORM y conexión a la base de datos
-│   │   ├── __init__.py
-│   │   ├── database.py        # Configuración de la base de datos (SQLite)
-│   │   └── tasks_repository.py # Funciones CRUD sobre tareas
-├── schema/                    # Esquemas Pydantic: validación de entrada/salida
-├── services/                  # Lógica de negocio 
-├── static/                    # Archivos estáticos 
-├── templates/                 # Plantillas HTML para Jinja2
-├── main.py                    # Punto de entrada principal de la app FastAPI
-task.db                        # Base de datos SQLite (si se está usando SQLite localmente)
-requirements.txt               # Dependencias del proyecto
+│   ├── models/                # Modelos ORM y conexión a la DB
+│   │   └── database.py        # Configuración de MySQL
+│   └── tasks_repository.py    # CRUD de tareas
+├── schema/                    # Esquemas Pydantic
+├── services/                  # Lógica de negocio
+├── main.py                    # Punto de entrada FastAPI
+to-do-list-react/              # Frontend con React
+requirements.txt               # Dependencias
 ```
 
 ---
