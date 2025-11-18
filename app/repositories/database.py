@@ -1,13 +1,25 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import os 
+from dotenv import load_dotenv
+
+# cargamos las variables de entorno
+load_dotenv()
+
+# accedemos a las variables de entorno
+DB_USER = os.getenv("DATABASE_USER")
+DB_PASS = os.getenv("DATABASE_PASSWORD")
+DB_NAME = os.getenv("DATABASE_NAME")
 
 # URL de conexion a SQLite
-DATABASE_URL = "sqlite:///./task.db"
+""" Agregar variables de entorno """
+DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASS}@localhost:3306/{DB_NAME}"
+
 
 # Crear motor de conexion a la base de datos
 engine = create_engine(
-    DATABASE_URL, connect_args={"check_same_thread": False}
+    DATABASE_URL
 )
 
 # Crear una sesion para interactuar con la base de datos
