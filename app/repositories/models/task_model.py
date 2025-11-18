@@ -5,6 +5,6 @@ class TaskModel(Base):
     __tablename__ = "task"
 
     id = Column(Integer, primary_key=True, index=True)
-    nombre = Column(String, index=True)
+    nombre = Column(String(255), index=True)
     completa = Column(Boolean)
     importante = Column(Boolean)
