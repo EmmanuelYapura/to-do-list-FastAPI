@@ -11,11 +11,9 @@ load_dotenv()
 DB_USER = os.getenv("DATABASE_USER")
 DB_PASS = os.getenv("DATABASE_PASSWORD")
 DB_NAME = os.getenv("DATABASE_NAME")
+DB_HOST = os.getenv("DATABASE_HOST", "localhost")
 
-# URL de conexion a SQLite
-""" Agregar variables de entorno """
-DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASS}@localhost:3306/{DB_NAME}"
-
+DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:3306/{DB_NAME}"
 
 # Crear motor de conexion a la base de datos
 engine = create_engine(
